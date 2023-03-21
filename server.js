@@ -190,11 +190,13 @@ app.get('/', (req, res) => {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, './uploads/');
   },
   filename: (req, file, cb) => {
+    console.log("file: ",file);
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    cb(null, `${file.fieldname}-${uniqueSuffix}-${file.originalname}`);
+    cb(null, `${file.originalname}`);
+    // cb(null, `${file.fieldname}-${uniqueSuffix}-${file.originalname}`);
   },
 });
 
@@ -222,6 +224,7 @@ app.post('/api/messages', upload.single('file'), (req, res) => {
   console.log(message, name);
   let imageUrl = null;
   // handle file uploads here if needed
+  console.log("the request: ",req);
   if (req.file && req.file.path) {
     imageUrl = `${req.protocol}://${req.get('host')}/${req.file.path}`;
   }
