@@ -246,6 +246,7 @@ app.post('/api/messages', upload.single('file'), (req, res) => {
   res.status(200).send();
 });
 
-server.listen(5001, () => {
+const port = process.env.PORT || 5001
+server.listen(port, () => {
   console.log(`Server started on port ${server.address().port}`);
 });
